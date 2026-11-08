@@ -23,7 +23,7 @@ export const brands = {
     eyebrow: 'leinerke.studio / Gastronomía · Marcas · Eventos',
     headline: 'Platos y marcas que se venden con la mirada',
     sub: 'Producción de foto y video para restaurantes, marcas y eventos, con dirección de arte incluida. Contenido listo para carta, web y redes.',
-    hero: { ...P('st-carolas-bebidas'), alt: 'Jugo con borde escarchado y rodaja de limón de Carola’s Creative', meta: 'Carola’s Creative / Bebidas' },
+    hero: { ...P('st-blessed'), alt: 'Hamburguesa con pollo y tocineta de Blessed Express', meta: 'Blessed Express / Gastronomía' },
     pickerImg: 'st-blessed',
     waMsg: 'Hola Leinerke, vi tu web y quiero cotizar un proyecto de leinerke.studio.',
     servicesTitle: 'Contenido que hace crecer tu negocio',
@@ -39,7 +39,7 @@ export const brands = {
     ],
     projects: [
       { ...reel('pizza-hero'), title: 'Pizzería en leña', tag: 'Reel · Hero', cats: ['Video', 'Gastronomía'], alt: 'Reel de la Pizzería en leña: preparación de la pizza' },
-      { ...P('st-blessed'), title: 'Blessed Express', tag: 'Hamburguesas', cats: ['Gastronomía'], alt: 'Hamburguesa con pollo y tocineta de Blessed Express' },
+      { ...P('st-carolas-bebidas'), title: 'Carola’s Creative', tag: 'Bebidas', cats: ['Gastronomía'], alt: 'Jugo con borde escarchado y rodaja de limón' },
       { ...P('st-carolas-carta'), title: 'Carola’s Creative', tag: 'Carta', cats: ['Gastronomía'], alt: 'Croquetas sobre salsa blanca mientras las cortan' },
       { ...reel('pan-y-fuego'), title: 'Pan y Fuego', tag: 'Reel', cats: ['Video', 'Gastronomía'], alt: 'Reel de Pan y Fuego' },
       { ...P('st-golosa-torta'), title: 'La Golosa', tag: 'Amor y amistad', cats: ['Postres'], alt: 'Torta roja decorada con corazones de La Golosa' },
