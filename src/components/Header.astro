@@ -1,0 +1,168 @@
+---
+import { brands, wa, asset } from '../data/content';
+const links = [
+  ['Portafolio', '#portafolio'],
+  ['Servicios', '#servicios'],
+  ['Sobre mí', '#sobre-mi'],
+];
+---
+
+<header class="header">
+  <div class="wrap bar">
+    <a href="#inicio" class="logo" aria-label="Leinerke, inicio">
+      <img src={asset('brand/wordmark-leinerke.studio.svg')} alt="leinerke.studio" data-only="studio" width="150" height="24" />
+      <img src={asset('brand/wordmark-leinerke.raw-blanco.svg')} alt="leinerke.raw" data-only="raw" width="128" height="24" />
+    </a>
+
+    <div class="toggle" role="group" aria-label="Submarca">
+      <button type="button" data-set-mode="studio" aria-pressed="true">.studio</button>
+      <button type="button" data-set-mode="raw" aria-pressed="false">.raw</button>
+    </div>
+
+    <nav class="links" aria-label="Principal">
+      {links.map(([label, href]) => <a href={href}>{label}</a>)}
+      <a class="btn btn-accent cta" data-only="studio" href={wa(brands.studio.waMsg)} target="_blank" rel="noopener">Cotizar</a>
+      <a class="btn btn-accent cta" data-only="raw" href={wa(brands.raw.waMsg)} target="_blank" rel="noopener">Cotizar</a>
+    </nav>
+
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-movil">Menú</button>
+  </div>
+
+  <nav id="menu-movil" class="wrap mobile" aria-label="Menú" hidden>
+    {links.map(([label, href]) => <a href={href}>{label}</a>)}
+    <a class="btn btn-accent" data-only="studio" href={wa(brands.studio.waMsg)} target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+    <a class="btn btn-accent" data-only="raw" href={wa(brands.raw.waMsg)} target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    transition: background-color 400ms ease;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 10px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    flex-shrink: 0;
+  }
+  .logo img {
+    height: 24px;
+    width: auto;
+  }
+  .toggle {
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .toggle button {
+    min-height: 36px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 300ms ease, color 300ms ease;
+  }
+  .toggle button[aria-pressed='true'] {
+    background: var(--accent);
+    color: #fff;
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 15px;
+  }
+  .links a:not(.btn) {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .links a:not(.btn):hover {
+    color: var(--fg);
+  }
+  .cta {
+    min-height: 44px;
+    padding: 0 20px;
+  }
+  .menu-btn {
+    display: none;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .mobile {
+    display: flex;
+    flex-direction: column;
+    padding-block: 8px 24px;
+    border-top: 1px solid var(--line);
+  }
+  .mobile[hidden] {
+    display: none;
+  }
+  .mobile a:not(.btn) {
+    padding: 12px 0;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .mobile .btn {
+    margin-top: 12px;
+  }
+
+  @media (max-width: 760px) {
+    .links {
+      display: none;
+    }
+    .menu-btn {
+      display: inline-flex;
+    }
+  }
+  @media (max-width: 400px) {
+    .logo img {
+      height: 19px;
+    }
+    .toggle button {
+      padding: 0 10px;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn')!;
+  const menu = document.getElementById('menu-movil')!;
+  const setOpen = (open: boolean) => {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Cerrar' : 'Menú';
+  };
+  btn.addEventListener('click', () => setOpen(menu.hidden));
+  menu.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setOpen(false);
+  });
+  document.addEventListener('modechange', () => setOpen(false));
+</script>

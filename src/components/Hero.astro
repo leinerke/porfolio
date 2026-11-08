@@ -1,0 +1,125 @@
+---
+import { brands, img, srcset, wa, type Mode } from '../data/content';
+const modes: Mode[] = ['studio', 'raw'];
+
+// Forma orgánica ("blob") para la foto principal, calculada al compilar.
+// Igual que el ejemplo en Sass: n puntos alrededor del centro con radio variable,
+// unidos con curvas que pasan por los puntos medios. Semilla fija = forma estable.
+function blob(seed: number, n = 7, d = 14) {
+  let s = seed;
+  const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+  const pts = Array.from({ length: n }, (_, k) => {
+    const i = k + 1;
+    const r = 51 - rand() * d;
+    const a = (2 * Math.PI * i) / n;
+    return [50 + r * Math.cos(a), 50 + r * Math.sin(a)];
+  });
+  const f = (v: number) => `${v.toFixed(2)}%`;
+  const mid = (a: number[], b: number[]) => `${f((a[0] + b[0]) / 2)} ${f((a[1] + b[1]) / 2)}`;
+  const parts = [`from ${mid(pts[0], pts[n - 1])}`];
+  for (let i = 0; i < n - 1; i++) parts.push(`curve to ${mid(pts[i], pts[i + 1])} with ${f(pts[i][0])} ${f(pts[i][1])}`);
+  parts.push(`curve to ${mid(pts[0], pts[n - 1])} with ${f(pts[n - 1][0])} ${f(pts[n - 1][1])}`);
+  return `shape(${parts.join(', ')})`;
+}
+const shapes: Record<Mode, string> = { studio: blob(11), raw: blob(5) };
+---
+
+<div id="inicio">
+{
+  modes.map((m) => {
+    const b = brands[m];
+    return (
+      <section class="wrap hero" data-only={m}>
+        <div class="text">
+          <p class="eyebrow">[ {b.eyebrow} ]</p>
+          <h1>{b.headline}<span class="dot">.</span></h1>
+          <p class="sub">{b.sub}</p>
+          <div class="actions">
+            <a class="btn btn-solid" href="#portafolio">Ver portafolio</a>
+            <a class="btn btn-line" href={wa(b.waMsg)} target="_blank" rel="noopener">
+              Cotizar por WhatsApp
+            </a>
+          </div>
+        </div>
+        <figure>
+          <img
+            style={`--blob: ${shapes[m]}`}
+            src={img(b.hero.src)}
+            srcset={srcset(b.hero.src)}
+            sizes="(max-width: 640px) 100vw, 576px"
+            width={b.hero.w}
+            height={b.hero.h}
+            alt={b.hero.alt}
+            fetchpriority={m === 'studio' ? 'high' : 'auto'}
+          />
+          <figcaption class="meta">[ {b.hero.meta} ]</figcaption>
+        </figure>
+      </section>
+    );
+  })
+}
+</div>
+
+<style>
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+    padding-block: clamp(32px, 5vw, 64px);
+  }
+  .text {
+    flex: 1 1 300px;
+    min-width: 0;
+  }
+  .eyebrow {
+    margin-bottom: 24px;
+  }
+  h1 {
+    max-width: 14ch;
+    font-size: clamp(40px, 5.8vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+  .sub {
+    margin-top: 28px;
+    max-width: 460px;
+    font-size: clamp(17px, 1.4vw, 19px);
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  figure {
+    flex: 1 1 260px;
+    max-width: 576px;
+    margin: 0;
+  }
+  figure img {
+    width: 100%;
+    background: var(--ph);
+    /* Respaldo para navegadores sin shape(): arco superior */
+    clip-path: inset(0 round 50% 50% 0 0 / 40% 40% 0 0);
+  }
+  /* Forma orgánica con shape() donde el navegador la soporta */
+  @supports (clip-path: shape(from 0 0, line to 100% 100%)) {
+    figure img {
+      clip-path: var(--blob);
+    }
+  }
+  figcaption {
+    padding-top: 12px;
+  }
+  @media (max-width: 640px) {
+    figure {
+      max-width: none;
+    }
+    .actions .btn {
+      flex: 1 1 auto;
+    }
+  }
+</style>

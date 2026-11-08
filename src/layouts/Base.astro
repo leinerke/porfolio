@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+import { asset } from '../data/content';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" data-mode="studio">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <meta name="theme-color" content="#F8F9FA" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(asset('media/img/st-blessed-1600.jpg'), Astro.site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Aplica la submarca guardada antes de pintar, para que no parpadee -->
+    <script is:inline>
+      (function () {
+        var m = null;
+        // ?modo=raw|studio en el enlace (p. ej. desde la bio de Instagram) entra directo
+        var q = new URLSearchParams(location.search).get('modo');
+        try {
+          if (q === 'raw' || q === 'studio') localStorage.setItem('leinerke-mode', q);
+          m = localStorage.getItem('leinerke-mode');
+        } catch (e) { m = q; }
+        var root = document.documentElement;
+        root.dataset.mode = m === 'raw' ? 'raw' : 'studio';
+        if (!m) root.dataset.firstVisit = '1';
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

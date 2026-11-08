@@ -1,0 +1,415 @@
+---
+import { brands, img, srcset, video, type Mode } from '../data/content';
+const modes: Mode[] = ['studio', 'raw'];
+---
+
+<section id="portafolio" class="wrap portfolio">
+  <div class="head">
+    <div>
+      <p class="eyebrow">[ 01 / Portafolio ]</p>
+      <h2 class="title-xl">Trabajo seleccionado</h2>
+    </div>
+    {
+      modes.map((m) => (
+        <div class="filters" role="group" aria-label="Filtrar por categoría" data-only={m}>
+          {brands[m].cats.map((c, i) => (
+            <button type="button" data-cat={c} aria-pressed={i === 0 ? 'true' : 'false'}>
+              {c}
+            </button>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    modes.map((m) => (
+      <div class="grid" data-only={m} data-grid={m}>
+        {brands[m].projects.map((p, i) => {
+          const isReel = p.kind === 'reel';
+          const v = isReel ? video(p.src) : null;
+          return (
+            <figure class="item" data-cats={p.cats.join('|')}>
+              <button
+                type="button"
+                class="open"
+                data-index={i}
+                aria-label={`Ver ${isReel ? 'reel' : 'foto'}: ${p.alt}`}
+              >
+                {v ? (
+                  <>
+                    <video
+                      class="preview"
+                      src={v.preview}
+                      poster={v.poster}
+                      width={p.w}
+                      height={p.h}
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                      aria-hidden="true"
+                    />
+                    <span class="badge">
+                      <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+                        <path d="M1 0.5L9.5 5L1 9.5Z" fill="currentColor" />
+                      </svg>
+                      Reel
+                    </span>
+                  </>
+                ) : (
+                  <img
+                    src={img(p.src)}
+                    srcset={srcset(p.src)}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                    width={p.w}
+                    height={p.h}
+                    alt={p.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </button>
+              <figcaption>
+                <span class="name">{p.title}</span>
+                <span class="meta">{p.tag}</span>
+              </figcaption>
+            </figure>
+          );
+        })}
+      </div>
+    ))
+  }
+  <p class="empty eyebrow" hidden>No hay trabajos en esta categoría todavía.</p>
+</section>
+
+<!-- Visor a pantalla completa para fotos y reels (con sonido) -->
+<dialog id="viewer" class="viewer" aria-label="Visor de portafolio">
+  <div class="stage"></div>
+  <p class="caption meta"></p>
+  <button type="button" class="nav prev" aria-label="Anterior">
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M13 3L6 10L13 17" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+  </button>
+  <button type="button" class="nav next" aria-label="Siguiente">
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3L14 10L7 17" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+  </button>
+  <button type="button" class="x" aria-label="Cerrar visor">
+    <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+  </button>
+</dialog>
+
+<script is:inline type="application/json" id="portfolio-data" set:html={JSON.stringify(
+  Object.fromEntries(
+    modes.map((m) => [
+      m,
+      brands[m].projects.map((p) =>
+        p.kind === 'reel'
+          ? { kind: 'reel', src: video(p.src).full, poster: video(p.src).poster, alt: p.alt, title: p.title, tag: p.tag }
+          : { kind: 'photo', src: img(p.src), alt: p.alt, title: p.title, tag: p.tag }
+      ),
+    ])
+  )
+)} />
+
+<style>
+  .portfolio {
+    padding-block: var(--section) 48px;
+  }
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .head .eyebrow {
+    margin-bottom: 14px;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .filters button {
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+    transition: color 200ms ease, border-color 200ms ease;
+  }
+  .filters button[aria-pressed='true'] {
+    color: var(--fg);
+    border-bottom-color: var(--accent);
+  }
+  /* Masonry: cada foto o reel completo en su formato original, sin recortes */
+  .grid {
+    margin-top: 32px;
+    columns: 3 280px;
+    column-gap: 16px;
+  }
+  .item {
+    break-inside: avoid;
+    margin: 0 0 24px;
+  }
+  .item[hidden] {
+    display: none;
+  }
+  .open {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: var(--ph);
+    cursor: zoom-in;
+    overflow: hidden;
+  }
+  .open img,
+  .open video {
+    width: 100%;
+    transition: transform 600ms ease, opacity 300ms ease;
+  }
+  .open:hover img,
+  .open:hover video {
+    transform: scale(1.02);
+  }
+  .badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(18, 20, 23, 0.72);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4px 16px;
+    padding-top: 12px;
+  }
+  .name {
+    font-size: 17px;
+  }
+  .empty {
+    padding: 64px 0;
+    text-align: center;
+  }
+
+  .viewer {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(10, 11, 13, 0.97);
+    color: #f1f5f9;
+  }
+  .viewer::backdrop {
+    background: rgba(10, 11, 13, 0.97);
+  }
+  .stage {
+    position: absolute;
+    inset: 56px 64px 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stage :global(img),
+  .stage :global(video) {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    text-align: center;
+    color: #9aa3ae;
+  }
+  .nav,
+  .x {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #f1f5f9;
+    cursor: pointer;
+  }
+  .prev {
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .next {
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .x {
+    top: 8px;
+    right: 8px;
+  }
+  @media (max-width: 640px) {
+    .stage {
+      inset: 56px 8px 96px;
+    }
+    .prev,
+    .next {
+      top: auto;
+      bottom: 16px;
+      transform: none;
+    }
+    .caption {
+      bottom: 72px;
+    }
+  }
+</style>
+
+<script>
+  import { currentMode } from '../scripts/mode';
+  import type { Mode } from '../data/content';
+
+  type Item = { kind: 'photo' | 'reel'; src: string; poster?: string; alt: string; title: string; tag: string };
+  const data = JSON.parse(document.getElementById('portfolio-data')!.textContent!) as Record<Mode, Item[]>;
+  const empty = document.querySelector<HTMLElement>('.portfolio .empty')!;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- Filtros por categoría ---
+  const applyFilter = (mode: Mode, cat: string) => {
+    const grid = document.querySelector<HTMLElement>(`[data-grid="${mode}"]`)!;
+    let shown = 0;
+    grid.querySelectorAll<HTMLElement>('.item').forEach((el) => {
+      const ok = cat === 'Todo' || el.dataset.cats!.split('|').includes(cat);
+      el.hidden = !ok;
+      if (ok) shown++;
+    });
+    empty.hidden = shown > 0;
+  };
+  document.querySelectorAll<HTMLElement>('.filters').forEach((group) => {
+    group.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-cat]');
+      if (!b) return;
+      group.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      applyFilter(group.dataset.only as Mode, b.dataset.cat!);
+    });
+  });
+  document.addEventListener('modechange', () => {
+    empty.hidden = true;
+    syncPreviews();
+  });
+
+  // --- Previews de reels: solo se reproducen cuando están en pantalla ---
+  const previews = [...document.querySelectorAll<HTMLVideoElement>('video.preview')];
+  const visible = new Set<HTMLVideoElement>();
+  const syncPreviews = () => {
+    previews.forEach((v) => {
+      const play = !reduceMotion && visible.has(v) && v.offsetParent !== null;
+      if (play) {
+        if (v.preload === 'none') v.preload = 'auto';
+        v.play().catch(() => {});
+      } else v.pause();
+    });
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((en) => (en.isIntersecting ? visible.add(en.target as HTMLVideoElement) : visible.delete(en.target as HTMLVideoElement)));
+      syncPreviews();
+    },
+    { rootMargin: '200px 0px' },
+  );
+  previews.forEach((v) => io.observe(v));
+
+  // --- Visor ---
+  const viewer = document.getElementById('viewer') as HTMLDialogElement;
+  const stage = viewer.querySelector<HTMLElement>('.stage')!;
+  const caption = viewer.querySelector<HTMLElement>('.caption')!;
+  let list: number[] = [];
+  let pos = 0;
+  let mode: Mode = 'studio';
+
+  const render = () => {
+    const item = data[mode][list[pos]];
+    stage.replaceChildren();
+    if (item.kind === 'reel') {
+      const v = document.createElement('video');
+      v.src = item.src;
+      v.poster = item.poster ?? '';
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      v.setAttribute('aria-label', item.alt);
+      stage.append(v);
+    } else {
+      const im = document.createElement('img');
+      im.src = item.src;
+      im.alt = item.alt;
+      stage.append(im);
+    }
+    caption.textContent = `${item.title} · ${item.tag}  —  ${pos + 1} / ${list.length}`;
+  };
+  const step = (d: number) => {
+    pos = (pos + d + list.length) % list.length;
+    render();
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-grid]').forEach((grid) => {
+    grid.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button.open');
+      if (!btn) return;
+      mode = currentMode();
+      list = [...grid.querySelectorAll<HTMLElement>('.item:not([hidden]) button.open')].map((b) => Number(b.dataset.index));
+      pos = list.indexOf(Number(btn.dataset.index));
+      render();
+      viewer.showModal();
+    });
+  });
+  viewer.querySelector('.prev')!.addEventListener('click', () => step(-1));
+  viewer.querySelector('.next')!.addEventListener('click', () => step(1));
+  viewer.querySelector('.x')!.addEventListener('click', () => viewer.close());
+  viewer.addEventListener('close', () => stage.replaceChildren());
+  // Tocar fuera de la foto cierra el visor
+  viewer.addEventListener('click', (e) => {
+    if (e.target === viewer || e.target === stage) viewer.close();
+  });
+  viewer.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+  // Deslizar en el celular
+  let x0 = 0;
+  stage.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+  });
+</script>

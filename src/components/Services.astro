@@ -1,0 +1,115 @@
+---
+import { brands, wa, type Mode } from "../data/content";
+const modes: Mode[] = ["studio", "raw"];
+---
+
+<section id="servicios" class="wrap services">
+  <p class="eyebrow">[ 02 / Servicios ]</p>
+  {
+    modes.map((m) => (
+      <h2 class="title-xl" data-only={m}>
+        {brands[m].servicesTitle}
+      </h2>
+    ))
+  }
+  {
+    modes.map((m) => (
+      <div class="list" data-only={m}>
+        {brands[m].services.map((s, i) => (
+          <article class="row">
+            <span class="n">0{i + 1}</span>
+            <div>
+              <h3>{s.title}</h3>
+              <p class="desc">{s.desc}</p>
+            </div>
+            <ul>
+              {s.items.map((d) => (
+                <li>— {d}</li>
+              ))}
+            </ul>
+            <a
+              class="btn btn-line quote"
+              href={wa(`Hola Leinerke, quiero cotizar: ${s.title}.`)}
+              target="_blank"
+              rel="noopener"
+            >
+              Cotizar
+            </a>
+          </article>
+        ))}
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  .services {
+    padding-block: var(--section);
+  }
+  .eyebrow {
+    margin-bottom: 14px;
+  }
+  h2 {
+    max-width: 18ch;
+  }
+  .list {
+    margin-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--fg);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1.3fr) minmax(0, 1fr) auto;
+    gap: 32px;
+    align-items: start;
+    padding-block: 32px;
+  }
+  .row:not(:last-child) {
+    border-bottom: 1px solid var(--line);
+  }
+  .n {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    padding-top: 8px;
+  }
+  h3 {
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .desc {
+    margin-top: 12px;
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .quote {
+    min-height: 44px;
+    padding: 0 20px;
+    justify-self: start;
+  }
+  @media (max-width: 860px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .n {
+      padding-top: 0;
+    }
+  }
+</style>

@@ -1,0 +1,136 @@
+---
+import { brands, img, asset } from '../data/content';
+---
+
+<dialog id="picker" class="picker" aria-labelledby="picker-title">
+  <form method="dialog" class="close-form">
+    <button class="close" aria-label="Cerrar y entrar a leinerke.studio" data-set-mode="studio">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+    </button>
+  </form>
+  <p class="eyebrow">[ Bienvenido ]</p>
+  <h2 id="picker-title" tabindex="-1" autofocus>¿Qué estás buscando<span class="dot">?</span></h2>
+  <form method="dialog" class="options">
+    <button class="option studio" data-set-mode="studio">
+      <img src={img(brands.studio.pickerImg, 800)} alt="" width="800" height="1000" />
+      <span class="label">
+        <img src={asset('brand/wordmark-leinerke.studio.svg')} alt="leinerke.studio" class="wm" />
+        <span>{brands.studio.pickerText}</span>
+      </span>
+    </button>
+    <button class="option raw" data-set-mode="raw">
+      <img src={img(brands.raw.pickerImg, 800)} alt="" width="800" height="1000" />
+      <span class="label">
+        <img src={asset('brand/wordmark-leinerke.raw-blanco.svg')} alt="leinerke.raw" class="wm" />
+        <span>{brands.raw.pickerText}</span>
+      </span>
+    </button>
+  </form>
+</dialog>
+
+<style>
+  .picker {
+    width: min(880px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: clamp(24px, 4vw, 48px);
+    border: 0;
+    background: #f8f9fa;
+    color: #121417;
+    overflow: auto;
+  }
+  .picker::backdrop {
+    background: rgba(13, 15, 17, 0.88);
+  }
+  .close-form {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+  .close {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .picker .eyebrow {
+    color: #5b636e;
+    margin-bottom: 12px;
+  }
+  h2:focus {
+    outline: none;
+  }
+  h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+  }
+  .picker .dot {
+    color: #1e523a;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .option {
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 250ms ease;
+  }
+  .option:hover {
+    transform: translateY(-3px);
+  }
+  .option > img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+  }
+  .studio {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    color: #5b636e;
+  }
+  .raw {
+    background: #121417;
+    border: 1px solid #262b33;
+    color: #9aa3ae;
+  }
+  .label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .wm {
+    height: 20px;
+    width: auto;
+    max-width: 100%;
+  }
+  @media (max-width: 420px) {
+    .label {
+      padding: 12px;
+      font-size: 13px;
+    }
+    .wm {
+      height: 15px;
+    }
+  }
+</style>
+
+<script>
+  import '../scripts/mode';
+  const picker = document.getElementById('picker') as HTMLDialogElement;
+  // Solo en la primera visita; después se recuerda la elección
+  if (document.documentElement.dataset.firstVisit) picker.showModal();
+  // Cerrar con Esc también deja .studio como elección
+  picker.addEventListener('cancel', () => {
+    import('../scripts/mode').then(({ setMode }) => setMode('studio'));
+  });
+</script>

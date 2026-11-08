@@ -1,0 +1,17 @@
+{
+  "name": "leinerke-web",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "media": "zsh scripts/media.sh"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/questrial": "^5.3.0",
+    "astro": "^7.4.7"
+  }
+}
