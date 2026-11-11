@@ -13,16 +13,14 @@ import { brands, img, asset } from '../data/content';
     <button class="option studio" data-set-mode="studio">
       <img src={img(brands.studio.pickerImg, 800)} alt="" width="800" height="1000" />
       <span class="label">
-        <img src={asset('brand/logo-leinerke-sin-margen.svg')} alt="LEINERKE" class="wm" />
-        <span class="sub">.studio</span>
+        <img src={asset('brand/logo-leinerke-studio-sin-margen.svg')} alt="LEINERKE STUDIO" class="wm" />
         <span>{brands.studio.pickerText}</span>
       </span>
     </button>
     <button class="option raw" data-set-mode="raw">
       <img src={img(brands.raw.pickerImg, 800)} alt="" width="800" height="1000" />
       <span class="label">
-        <img src={asset('brand/logo-leinerke-blanco-sin-margen.svg')} alt="LEINERKE" class="wm" />
-        <span class="sub">.raw</span>
+        <img src={asset('brand/logo-leinerke-raw-blanco-sin-margen.svg')} alt="LEINERKE RAW" class="wm" />
         <span>{brands.raw.pickerText}</span>
       </span>
     </button>
@@ -102,18 +100,9 @@ import { brands, img, asset } from '../data/content';
     font-size: 15px;
     line-height: 1.4;
   }
-  .sub {
-    margin-top: -2px;
-    font-size: var(--text-small);
-    font-weight: 700;
-    color: var(--brand-green);
-  }
-  .raw .sub {
-    color: var(--brand-green-light);
-  }
   .wm {
     align-self: flex-start;
-    height: 12px;
+    height: 22px;
     width: auto;
     max-width: 100%;
   }
@@ -122,17 +111,8 @@ import { brands, img, asset } from '../data/content';
       padding: 12px;
       font-size: 13px;
     }
-    .sub {
-    margin-top: -2px;
-    font-size: var(--text-small);
-    font-weight: 700;
-    color: var(--brand-green);
-  }
-  .raw .sub {
-    color: var(--brand-green-light);
-  }
-  .wm {
-      height: 9px;
+    .wm {
+      height: 16px;
     }
   }
 </style>
@@ -141,7 +121,10 @@ import { brands, img, asset } from '../data/content';
   import '../scripts/mode';
   const picker = document.getElementById('picker') as HTMLDialogElement;
   // Solo en la primera visita; después se recuerda la elección
-  if (document.documentElement.dataset.firstVisit) picker.showModal();
+  // Se abre cuando se retira la pantalla de carga
+  const open = () => document.documentElement.dataset.firstVisit && picker.showModal();
+  if (document.documentElement.dataset.loaded) open();
+  else document.addEventListener('loader:done', open, { once: true });
   // Cerrar con Esc también deja .studio como elección
   picker.addEventListener('cancel', () => {
     import('../scripts/mode').then(({ setMode }) => setMode('studio'));

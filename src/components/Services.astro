@@ -6,12 +6,12 @@ const modes: Mode[] = ['studio', 'raw'];
 <!-- Pozo tintado: la única sección con fondo propio antes del cierre -->
 <section id="servicios" class="services">
   <div class="wrap">
-    {modes.map((m) => <h2 class="section-title" data-only={m}>{brands[m].servicesTitle}</h2>)}
+    {modes.map((m) => <h2 class="section-title reveal" data-only={m}>{brands[m].servicesTitle}</h2>)}
     {
       modes.map((m) => (
         <div class="list" data-only={m}>
-          {brands[m].services.map((s) => (
-            <article class="row">
+          {brands[m].services.map((s, i) => (
+            <article class="row reveal" style={`--d: ${i * 80}ms`}>
               <div>
                 <h3>{s.title}</h3>
                 <p class="desc">{s.desc}</p>

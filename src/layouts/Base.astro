@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { asset } from '../data/content';
+import Loader from '../components/Loader.astro';
 
 interface Props {
   title: string;
@@ -34,12 +35,17 @@ const { title, description } = Astro.props;
           m = localStorage.getItem('leinerke-mode');
         } catch (e) { m = q; }
         var root = document.documentElement;
+        root.classList.add('js');
         root.dataset.mode = m === 'raw' ? 'raw' : 'studio';
         if (!m) root.dataset.firstVisit = '1';
       })();
     </script>
   </head>
   <body>
+    <Loader />
     <slot />
+    <script>
+      import '../scripts/reveal';
+    </script>
   </body>
 </html>

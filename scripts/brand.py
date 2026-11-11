@@ -136,6 +136,8 @@ for suffix, (ink, accent) in variants.items():
         base = U + 0.6 * U + 0.32 * U
         d = descriptor(sub, ink if suffix else PALETTE['ink'], box[0], box[2], base)
         write(f'logo-leinerke-{sub.lower()}{suffix}.svg', svg([box[0], box[1], box[2], base], body + d, pad))
+        if suffix in ('', '-blanco'):
+            write(f'logo-leinerke-{sub.lower()}{suffix}-sin-margen.svg', svg([box[0], box[1], box[2], base], body + d, 0))
     sym, sbox = symbol(ink, accent)
     write(f'simbolo{suffix}.svg', svg(sbox, sym, pad * 0.6))
 

@@ -6,9 +6,9 @@ const modes: Mode[] = ['studio', 'raw'];
 <!-- Banda oscura de cierre: el papel cambia, la acción es WhatsApp -->
 <section id="contacto" class="contact">
   <div class="wrap inner">
-    {modes.map((m) => <h2 data-only={m}>{brands[m].ctaTitle}?</h2>)}
-    <p class="lead">Escríbeme por WhatsApp y cuéntame qué necesitas. Te respondo con una propuesta.</p>
-    <div class="actions">
+    {modes.map((m) => <h2 class="reveal" data-only={m}>{brands[m].ctaTitle}?</h2>)}
+    <p class="lead reveal" style="--d: 100ms">Escríbeme por WhatsApp y cuéntame qué necesitas. Te respondo con una propuesta.</p>
+    <div class="actions reveal" style="--d: 200ms">
       {
         modes.map((m) => (
           <a class="btn cta" data-only={m} href={wa(brands[m].waMsg)} target="_blank" rel="noopener">

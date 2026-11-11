@@ -3,7 +3,7 @@ import { capabilities, img, srcset } from '../data/content';
 ---
 
 <section id="sobre-mi" class="wrap about">
-  <figure>
+  <figure class="reveal">
     <img
       src={img('retrato')}
       srcset={srcset('retrato')}
@@ -14,7 +14,7 @@ import { capabilities, img, srcset } from '../data/content';
       loading="lazy"
     />
   </figure>
-  <div class="text">
+  <div class="text reveal" style="--d: 120ms">
     <h2 class="section-title">Dos mundos, la misma obsesión por el cuadro perfecto</h2>
     <div class="bio">
       <p>

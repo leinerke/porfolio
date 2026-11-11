@@ -11,8 +11,8 @@ const links = [
 <header class="header">
   <div class="wrap bar">
     <a href={`${base}/`} class="logo" aria-label="LEINERKE, inicio">
-      <img src={asset('brand/logo-leinerke-sin-margen.svg')} alt="LEINERKE" data-only="studio" width="154" height="14" />
-      <img src={asset('brand/logo-leinerke-blanco-sin-margen.svg')} alt="LEINERKE" data-only="raw" width="154" height="14" />
+      <img src={asset('brand/logo-leinerke-studio-sin-margen.svg')} alt="LEINERKE STUDIO" data-only="studio" width="147" height="26" />
+      <img src={asset('brand/logo-leinerke-raw-blanco-sin-margen.svg')} alt="LEINERKE RAW" data-only="raw" width="147" height="26" />
     </a>
 
     <div class="toggle" role="group" aria-label="Submarca">
@@ -26,7 +26,13 @@ const links = [
       <a class="btn btn-accent cta" data-only="raw" href={wa(brands.raw.waMsg)} target="_blank" rel="noopener">Cotizar</a>
     </nav>
 
-    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-movil">Menú</button>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir menú">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+        <line class="l1" x1="4" y1="8" x2="24" y2="8" />
+        <line class="l2" x1="4" y1="14" x2="24" y2="14" />
+        <line class="l3" x1="4" y1="20" x2="24" y2="20" />
+      </svg>
+    </button>
   </div>
 
   <nav id="menu-movil" class="wrap mobile" aria-label="Menú" hidden>
@@ -59,7 +65,7 @@ const links = [
     flex-shrink: 0;
   }
   .logo img {
-    height: 14px;
+    height: 26px;
     width: auto;
   }
   .toggle {
@@ -109,12 +115,33 @@ const links = [
   .menu-btn {
     display: none;
     align-items: center;
-    min-height: 44px;
-    padding: 0 var(--space-2);
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: calc(var(--space-2) * -1);
+    padding: 0;
     border: 0;
     background: transparent;
+    color: var(--fg);
     cursor: pointer;
-    font-weight: 700;
+  }
+  /* Tres rayas que se vuelven una X */
+  .menu-btn line {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    transform-origin: 14px 14px;
+    transition: transform 350ms var(--ease), opacity 200ms var(--ease);
+  }
+  .menu-btn[aria-expanded='true'] .l1 {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .menu-btn[aria-expanded='true'] .l2 {
+    opacity: 0;
+    transform: scaleX(0.2);
+  }
+  .menu-btn[aria-expanded='true'] .l3 {
+    transform: translateY(-6px) rotate(-45deg);
   }
   .mobile {
     display: flex;
@@ -124,6 +151,33 @@ const links = [
   }
   .mobile[hidden] {
     display: none;
+  }
+  .mobile:not([hidden]) {
+    animation: drop 350ms var(--ease);
+  }
+  .mobile:not([hidden]) a {
+    animation: rise 450ms var(--ease) both;
+  }
+  .mobile:not([hidden]) a:nth-child(2) {
+    animation-delay: 50ms;
+  }
+  .mobile:not([hidden]) a:nth-child(3) {
+    animation-delay: 100ms;
+  }
+  .mobile:not([hidden]) a:nth-child(n + 4) {
+    animation-delay: 150ms;
+  }
+  @keyframes drop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
   }
   .mobile a:not(.btn) {
     padding: var(--space-3) 0;
@@ -146,7 +200,7 @@ const links = [
   }
   @media (max-width: 400px) {
     .logo img {
-      height: 11px;
+      height: 21px;
     }
     .toggle button {
       padding: 0 var(--space-3);
@@ -161,7 +215,7 @@ const links = [
   const setOpen = (open: boolean) => {
     menu.hidden = !open;
     btn.setAttribute('aria-expanded', String(open));
-    btn.textContent = open ? 'Cerrar' : 'Menú';
+    btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
   };
   btn.addEventListener('click', () => setOpen(menu.hidden));
   menu.addEventListener('click', (e) => {

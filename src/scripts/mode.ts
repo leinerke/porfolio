@@ -9,6 +9,14 @@ export function currentMode(): Mode {
 }
 
 export function setMode(mode: Mode) {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+  if (doc.startViewTransition && !reduce && currentMode() !== mode) {
+    doc.startViewTransition(() => applyMode(mode));
+  } else applyMode(mode);
+}
+
+function applyMode(mode: Mode) {
   const root = document.documentElement;
   root.dataset.mode = mode;
   delete root.dataset.firstVisit;

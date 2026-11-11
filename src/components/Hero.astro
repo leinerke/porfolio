@@ -10,16 +10,16 @@ const modes: Mode[] = ['studio', 'raw'];
       return (
         <section class="wrap hero" data-only={m}>
           <div class="text">
-            <h1>{b.headline}</h1>
-            <p class="lede">{b.sub}</p>
-            <div class="actions">
+            <h1 class="reveal">{b.headline}</h1>
+            <p class="lede reveal" style="--d: 120ms">{b.sub}</p>
+            <div class="actions reveal" style="--d: 240ms">
               <a class="btn btn-accent" href={wa(b.waMsg)} target="_blank" rel="noopener">
                 Cotizar por WhatsApp
               </a>
               <a class="link" href="#portafolio">Ver portafolio</a>
             </div>
           </div>
-          <figure>
+          <figure class="reveal" style="--d: 160ms">
             <img
               src={img(b.hero.src)}
               srcset={srcset(b.hero.src)}

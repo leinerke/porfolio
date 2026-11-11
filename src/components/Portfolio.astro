@@ -5,7 +5,7 @@ const modes: Mode[] = ['studio', 'raw'];
 
 <section id="portafolio" class="wrap portfolio">
   <div class="head">
-    <h2 class="section-title">Trabajo seleccionado</h2>
+    <h2 class="section-title reveal">Trabajo seleccionado</h2>
     {
       modes.map((m) => (
         <div class="filters" role="group" aria-label="Filtrar por categoría" data-only={m}>
@@ -26,7 +26,7 @@ const modes: Mode[] = ['studio', 'raw'];
           const isReel = p.kind === 'reel';
           const v = isReel ? video(p.src) : null;
           return (
-            <figure class="item" data-cats={p.cats.join('|')}>
+            <figure class="item reveal" style={`--d: ${(i % 3) * 90}ms`} data-cats={p.cats.join('|')}>
               <button
                 type="button"
                 class="open"
@@ -154,6 +154,15 @@ const modes: Mode[] = ['studio', 'raw'];
   }
   .item[hidden] {
     display: none;
+  }
+  .item.pop {
+    animation: pop 500ms var(--ease) both;
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
   }
   .open {
     position: relative;
@@ -308,7 +317,13 @@ const modes: Mode[] = ['studio', 'raw'];
     grid.querySelectorAll<HTMLElement>('.item').forEach((el) => {
       const ok = cat === 'Todo' || el.dataset.cats!.split('|').includes(cat);
       el.hidden = !ok;
-      if (ok) shown++;
+      if (ok) {
+        shown++;
+        // Al filtrar, los trabajos visibles entran de nuevo
+        el.classList.remove('pop');
+        void el.offsetWidth;
+        el.classList.add('pop');
+      }
     });
     empty.hidden = shown > 0;
   };
