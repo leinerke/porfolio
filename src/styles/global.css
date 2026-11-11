@@ -1,4 +1,6 @@
-@import '@fontsource/questrial/400.css';
+@import '@fontsource/manrope/400.css';
+@import '@fontsource/manrope/500.css';
+@import '@fontsource/manrope/700.css';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
 
@@ -43,7 +45,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
-  font-family: Questrial, system-ui, sans-serif;
+  font-family: Manrope, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   transition: background-color 400ms ease, color 400ms ease;
 }
@@ -72,7 +74,7 @@ button {
 h1,
 h2,
 h3 {
-  font-weight: 400;
+  font-weight: 700;
   margin: 0;
 }
 
