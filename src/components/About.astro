@@ -7,44 +7,41 @@ import { capabilities, img, srcset } from '../data/content';
     <img
       src={img('retrato')}
       srcset={srcset('retrato')}
-      sizes="(max-width: 860px) 100vw, 380px"
+      sizes="(max-width: 860px) 100vw, 420px"
       width="1280"
       height="1600"
       alt="Leinerke, fotógrafo y filmmaker, sentado con su cámara Sony"
       loading="lazy"
     />
   </figure>
-  <div>
-    <p class="eyebrow">[ 03 / Sobre mí ]</p>
-    <h2>Dos mundos, la misma obsesión por el cuadro perfecto<span class="dot">.</span></h2>
+  <div class="text">
+    <h2 class="section-title">Dos mundos, la misma obsesión por el cuadro perfecto</h2>
     <div class="bio">
       <p>
         Soy fotógrafo y filmmaker en Medellín. En la pista busco el segundo exacto del salto; en la cocina, el instante en que el plato se ve mejor. Las dos cosas piden lo mismo: anticipación.
       </p>
       <p>Hago la producción completa: idea, fotografía, video, edición y color. Tú recibes contenido listo para publicar.</p>
     </div>
-    <ul class="caps">
+    <dl class="caps">
       {
-        capabilities.map((c, i) => (
-          <li>
-            <span class="meta n">[ 0{i + 1} ]</span>
-            <span class="t">{c.title}</span>
-            <span class="d">{c.desc}</span>
-          </li>
+        capabilities.map((c) => (
+          <div>
+            <dt>{c.title}</dt>
+            <dd>{c.desc}</dd>
+          </div>
         ))
       }
-    </ul>
+    </dl>
   </div>
 </section>
 
 <style>
   .about {
     display: grid;
-    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
-    gap: clamp(40px, 6vw, 96px);
-    align-items: start;
-    padding-block: var(--section);
-    border-top: 1px solid var(--line);
+    grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+    gap: clamp(var(--space-7), 6vw, var(--space-10));
+    align-items: center;
+    padding-block: var(--space-11);
   }
   figure {
     margin: 0;
@@ -53,59 +50,43 @@ import { capabilities, img, srcset } from '../data/content';
     width: 100%;
     background: var(--ph);
   }
-  .eyebrow {
-    margin-bottom: 14px;
-  }
-  h2 {
-    max-width: 16ch;
-    font-size: clamp(34px, 4.6vw, 64px);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-  }
   .bio {
-    margin-top: 28px;
-    max-width: 58ch;
+    margin-top: var(--space-6);
+    max-width: 60ch;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    font-size: 18px;
-    line-height: 1.6;
+    gap: var(--space-4);
+    font-size: var(--text-lede);
     color: var(--muted);
   }
   .caps {
-    margin: 40px 0 0;
-    padding: 0;
-    list-style: none;
+    margin: var(--space-7) 0 0;
+    max-width: 60ch;
+  }
+  .caps div {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-4);
     border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
   }
-  .caps li {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 20px;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+  dt {
+    font-weight: 700;
   }
-  .n {
-    color: var(--accent);
-  }
-  .t {
-    font-size: 17px;
-  }
-  .d {
-    font-size: 14px;
-    line-height: 1.5;
+  dd {
+    margin: 0;
     color: var(--muted);
   }
   @media (max-width: 860px) {
     .about {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
+      padding-block: var(--space-9);
     }
     figure {
       max-width: 420px;
+    }
+    .caps div {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

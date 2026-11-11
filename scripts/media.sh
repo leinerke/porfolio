@@ -46,7 +46,6 @@ photo "$HOME/.claude/uploads/20de673c-b8ae-46a6-9368-8fc10bea4210/f3b200fd-image
 
 # Reels
 reel "$V/pizza en lena/00-demostracion/Hero 1.mov" pizza-hero 2
-reel "$V/pan y fuego/demostracion.mov" pan-y-fuego 20
 reel "$V/Cocina de Franco.mov" cocina-de-franco 12
 reel "$V/pizza en lena/00-demostracion/review.mov" pizza-resena 4
 echo "Listo: $OUT"

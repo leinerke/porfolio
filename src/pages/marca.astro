@@ -1,0 +1,637 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { asset, img } from '../data/content';
+import '@fontsource/michroma/400.css';
+
+const brand = (f: string) => asset(`brand/${f}`);
+
+const logos = [
+  { name: 'Principal', file: 'logo-leinerke.svg', bg: 'var(--brand-paper)' },
+  { name: 'Sobre oscuro', file: 'logo-leinerke-blanco.svg', bg: 'var(--brand-carbon)' },
+  { name: 'Una tinta negra', file: 'logo-leinerke-negro.svg', bg: '#fdfdfd' },
+  { name: 'Una tinta blanca', file: 'logo-leinerke-blanco-una-tinta.svg', bg: 'var(--brand-green)' },
+];
+const subs = [
+  { name: 'leinerke.studio', file: 'logo-leinerke-studio.svg', bg: 'var(--brand-paper)', note: 'Gastronomía, marcas y eventos. Ambiente claro.' },
+  { name: 'leinerke.raw', file: 'logo-leinerke-raw-blanco.svg', bg: 'var(--brand-carbon)', note: 'Motor, deporte y acción. Ambiente oscuro.' },
+];
+const colors = [
+  { name: 'Verde tierra', hex: '#1E523A', rgb: '30, 82, 58', use: 'La firma. La I del logo, botones y acentos.', ink: 'var(--brand-paper)' },
+  { name: 'Verde luz', hex: '#3A8A62', rgb: '58, 138, 98', use: 'El mismo verde sobre fondos oscuros.', ink: 'var(--brand-carbon)' },
+  { name: 'Carbón', hex: '#121417', rgb: '18, 20, 23', use: 'Texto y fondo de .raw. El color principal.', ink: 'var(--brand-paper)' },
+  { name: 'Grafito', hex: '#2A2F36', rgb: '42, 47, 54', use: 'Superficies sobre carbón y bandas de cierre.', ink: 'var(--brand-paper)' },
+  { name: 'Plata', hex: '#C9CDD2', rgb: '201, 205, 210', use: 'Líneas y detalles. El brillo automotriz.', ink: 'var(--brand-carbon)' },
+  { name: 'Papel', hex: '#F8F9FA', rgb: '248, 249, 250', use: 'Fondo de .studio y de los documentos.', ink: 'var(--brand-carbon)' },
+  { name: 'Dorado', hex: '#B89A5E', rgb: '184, 154, 94', use: 'Solo piezas especiales: estampado y bordado.', ink: 'var(--brand-carbon)' },
+];
+const donts = [
+  'No deformes ni estires el logotipo.',
+  'No cambies el color de la I: siempre verde tierra, o el mismo color del resto en una tinta.',
+  'No reescribas LEINERKE con otra fuente.',
+  'No le pongas sombras, contornos, degradados ni rotaciones.',
+  'No lo pongas sobre una zona de la foto donde no se lea.',
+];
+---
+
+<Base
+  title="Manual de marca · LEINERKE"
+  description="Logotipo, símbolo, colores, tipografías y reglas de uso de la marca LEINERKE, con los archivos para descargar."
+>
+  <Header />
+  <main class="manual">
+    <section class="cover">
+      <div class="wrap cover-inner">
+        <img src={brand('logo-leinerke-blanco-sin-margen.svg')} alt="LEINERKE" class="cover-logo" width="960" height="88" />
+        <div class="cover-text">
+          <h1>Manual de marca</h1>
+          <p>Cómo se ve y cómo se usa LEINERKE, para que se reconozca igual en una foto, en Instagram, en un video o en una tarjeta. Todos los archivos se descargan desde aquí.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap block essence">
+      <h2 class="section-title">Calidad que se nota</h2>
+      <dl class="facts">
+        <div><dt>Promesa</dt><dd>Calidad, resultados y nivel profesional. El fotógrafo que buscan cuando la imagen importa.</dd></div>
+        <div><dt>Para quién</dt><dd>Marcas grandes, automotriz y motor, restaurantes de autor. Gente que distingue lo amateur en un segundo.</dd></div>
+        <div><dt>Personalidad</dt><dd>Precisa, sobria y segura. Como un buen auto: nada sobra, todo está medido.</dd></div>
+      </dl>
+    </section>
+
+    <section class="block logos" id="logotipo">
+      <div class="wrap">
+        <h2 class="section-title">Logotipo</h2>
+        <p class="intro">LEINERKE escrito en Michroma, con mucho aire entre letras. Su único detalle propio es la I verde: una letra con color que vuelve reconocible el nombre. Cada archivo ya incluye su espacio de respeto.</p>
+        <div class="logo-grid">
+          {logos.map((l) => (
+            <figure>
+              <div class="plate" style={`background: ${l.bg}`}>
+                <img src={brand(l.file)} alt={`Logotipo, versión ${l.name.toLowerCase()}`} />
+              </div>
+              <figcaption>
+                <span>{l.name}</span>
+                <a class="link" href={brand(l.file)} download>Descargar SVG</a>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <div class="logo-grid two">
+          {subs.map((l) => (
+            <figure>
+              <div class="plate tall" style={`background: ${l.bg}`}>
+                <img src={brand(l.file)} alt={`Logotipo de ${l.name}`} />
+              </div>
+              <figcaption>
+                <span><b>{l.name}</b>. {l.note}</span>
+                <a class="link" href={brand(l.file)} download>Descargar SVG</a>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap block symbol">
+      <div>
+        <h2 class="section-title">Símbolo</h2>
+        <p class="intro">La L con la I verde guardada en su esquina: el detalle del logotipo, condensado. Va donde el nombre no cabe: foto de perfil, favicon, marca de agua pequeña, bordados.</p>
+        <p class="downloads">
+          <a class="link" href={brand('simbolo.svg')} download>Símbolo SVG</a>
+          <a class="link" href={brand('simbolo-blanco.svg')} download>Símbolo blanco SVG</a>
+          <a class="link" href={brand('avatar-studio.png')} download>Avatar .studio</a>
+          <a class="link" href={brand('avatar-raw.png')} download>Avatar .raw</a>
+        </p>
+      </div>
+      <div class="symbol-row">
+        <div class="sq" style="background: var(--brand-paper)"><img src={brand('simbolo.svg')} alt="Símbolo sobre claro" /></div>
+        <div class="sq" style="background: var(--brand-carbon)"><img src={brand('simbolo-blanco.svg')} alt="Símbolo sobre oscuro" /></div>
+        <img class="avatar" src={brand('avatar-studio.png')} alt="Foto de perfil de @leinerke.studio" width="1080" height="1080" />
+        <img class="avatar" src={brand('avatar-raw.png')} alt="Foto de perfil de @leinerke.raw" width="1080" height="1080" />
+      </div>
+    </section>
+
+    <section class="block rules">
+      <div class="wrap rules-grid">
+        <h2 class="section-title">Medidas</h2>
+        <dl class="facts">
+          <div><dt>Unidad</dt><dd>u es la altura de una mayúscula del logotipo. Todo se mide con ella.</dd></div>
+          <div><dt>Espacio de respeto</dt><dd>1u libre alrededor del logo. Nada entra ahí: ni texto, ni bordes, ni el borde de la foto.</dd></div>
+          <div><dt>Tamaño mínimo</dt><dd>Logotipo: 120 px o 30 mm de ancho. Símbolo: 16 px o 5 mm.</dd></div>
+          <div><dt>Submarca</dt><dd>STUDIO o RAW debajo, de 0.32u de alto, a 0.6u del nombre y justificado a su mismo ancho.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="wrap block" id="color">
+      <h2 class="section-title">Color</h2>
+      <p class="intro">El verde tierra es la firma: tierra, y también el verde de los autos de carrera clásicos. El dorado es solo para piezas especiales; si aparece en todo, deja de serlo. Para impresión, pide al impresor una prueba del verde y del dorado.</p>
+      <ul class="swatches">
+        {colors.map((c) => (
+          <li>
+            <div class="chip" style={`background: ${c.hex}; color: ${c.ink}`}>{c.hex}</div>
+            <p class="c-name">{c.name}</p>
+            <p class="c-val">RGB {c.rgb}</p>
+            <p class="c-use">{c.use}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="ratio" role="img" aria-label="Proporción de color en una pieza: 60 carbón o papel, 25 contraste, 7 plata, 6 verde, 2 dorado">
+        <span style="flex: 60; background: var(--brand-carbon)"></span>
+        <span style="flex: 25; background: var(--brand-paper); box-shadow: inset 0 0 0 1px var(--line)"></span>
+        <span style="flex: 7; background: var(--brand-silver)"></span>
+        <span style="flex: 6; background: var(--brand-green)"></span>
+        <span style="flex: 2; background: #b89a5e"></span>
+      </div>
+      <p class="note">En una pieza: 60 % carbón o papel, 25 % el contraste, 7 % plata, 6 % verde y 2 % dorado.</p>
+    </section>
+
+    <section class="block type" id="tipografia">
+      <div class="wrap">
+        <h2 class="section-title">Tipografía</h2>
+        <p class="intro">Dos familias, gratuitas y de uso comercial (Google Fonts, licencia SIL OFL). Instálalas en tu Mac y quedan disponibles en DaVinci, Lightroom y Canva.</p>
+        <div class="faces">
+          <article>
+            <p class="specimen michroma">LEINERKE</p>
+            <h3>Michroma</h3>
+            <p>Solo para el logotipo. Ya viene convertido en los archivos; no hace falta escribirlo.</p>
+            <a class="link" href="https://fonts.google.com/specimen/Michroma" target="_blank" rel="noopener">Ver en Google Fonts</a>
+          </article>
+          <article>
+            <p class="specimen manrope">Platos y marcas que se venden con la mirada</p>
+            <h3>Manrope</h3>
+            <p>La voz de todo lo demás: la web, los titulares, las propuestas, los textos. Bold para titulares, Regular para leer.</p>
+            <a class="link" href="https://fonts.google.com/specimen/Manrope" target="_blank" rel="noopener">Ver en Google Fonts</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap block subtitles" id="subtitulos">
+      <div class="sub-text">
+        <h2 class="section-title">Subtítulos de video</h2>
+        <dl class="facts single">
+          <div><dt>Fuente</dt><dd>Manrope ExtraBold. Gruesa y clara aunque el video vaya rápido.</dd></div>
+          <div><dt>Tamaño</dt><dd>Unos 64 px de alto en un video de 1080 × 1920.</dd></div>
+          <div><dt>Formato</dt><dd>Máximo dos líneas, unos 28 caracteres por línea, en minúscula normal.</dd></div>
+          <div><dt>Color</dt><dd>Blanco con una sombra suave. La palabra clave de la frase va en una caja verde.</dd></div>
+          <div><dt>Posición</dt><dd>Centrado, entre el 60 % y el 70 % de la altura. Nunca en el 20 % de abajo, donde Instagram pone sus botones.</dd></div>
+        </dl>
+      </div>
+      <div class="phones">
+        <figure class="frame">
+          <img src={asset('media/video/pizza-hero-poster.jpg')} alt="Cuadro del reel de la Pizzería en leña con un subtítulo de ejemplo" width="720" height="1280" loading="lazy" />
+          <p class="sub-sample">La pizza que <span>todos</span> están pidiendo</p>
+        </figure>
+        <figure class="frame">
+          <img src={asset('media/video/cocina-de-franco-poster.jpg')} alt="Cuadro del reel de Cocina de Franco con un subtítulo de ejemplo" width="720" height="1280" loading="lazy" />
+          <p class="sub-sample">Así suena una parrilla <span>de verdad</span></p>
+        </figure>
+      </div>
+    </section>
+
+    <section class="block donts">
+      <div class="wrap donts-grid">
+        <h2 class="section-title">Lo que no se hace</h2>
+        <ol>
+          {donts.map((d) => <li>{d}</li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section class="wrap block uses" id="aplicaciones">
+      <h2 class="section-title">En uso</h2>
+      <div class="uses-grid">
+        <figure>
+          <div class="watermark">
+            <img src={img('st-pizza')} alt="Foto de pizza con la marca de agua de LEINERKE" width="1080" height="1350" loading="lazy" />
+            <img class="wm" src={brand('logo-leinerke-blanco-una-tinta.svg')} alt="" />
+          </div>
+          <figcaption>Marca de agua: logotipo blanco a una tinta, abajo a la derecha, a un cuarto del ancho de la foto y con 85 % de opacidad.</figcaption>
+        </figure>
+        <figure class="cards">
+          <div class="card front"><img src={brand('logo-leinerke-blanco-sin-margen.svg')} alt="Tarjeta de presentación, frente" /></div>
+          <div class="card back">
+            <img src={brand('simbolo.svg')} alt="" class="card-symbol" />
+            <div>
+              <p class="card-name">Leinerke</p>
+              <p class="card-role">Fotógrafo y filmmaker</p>
+              <p class="card-contact">+57 301 883 0254<br />@leinerke.studio, @leinerke.raw</p>
+            </div>
+          </div>
+          <figcaption>Tarjeta de 85 × 55 mm. Frente en carbón, reverso en papel. En una edición especial, el logo del frente va estampado en dorado.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* La página del manual usa siempre el ambiente claro */
+  .manual {
+    --bg: var(--brand-paper);
+    --fg: var(--brand-carbon);
+    --muted: #545c66;
+    --line: #dfe3e8;
+    background: var(--bg);
+    color: var(--fg);
+  }
+  .cover {
+    background: var(--brand-carbon);
+    color: var(--brand-snow);
+  }
+  .cover-inner {
+    min-height: min(calc(88svh - 69px), 820px);
+    display: grid;
+    align-content: center;
+    gap: var(--space-9);
+    padding-block: var(--space-9);
+  }
+  .cover-logo {
+    width: min(100%, 960px);
+    height: auto;
+  }
+  .cover-text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: var(--space-6);
+    align-items: end;
+  }
+  .cover h1 {
+    font-size: var(--text-section);
+    line-height: 1.05;
+  }
+  .cover p {
+    max-width: 52ch;
+    font-size: var(--text-lede);
+    color: #a3abb5;
+  }
+  .block {
+    padding-block: var(--space-10);
+  }
+  .intro {
+    margin-top: var(--space-5);
+    max-width: 62ch;
+    font-size: var(--text-lede);
+    color: var(--muted);
+  }
+  .facts {
+    margin: var(--space-7) 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .facts div {
+    border-top: 1px solid var(--fg);
+    padding-top: var(--space-4);
+  }
+  .facts dt {
+    font-weight: 700;
+  }
+  .facts dd {
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
+  }
+  .logos {
+    background: #eef0f2;
+  }
+  .logo-grid {
+    margin-top: var(--space-7);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+  .logo-grid.two {
+    margin-top: var(--space-5);
+  }
+  .logo-grid figure {
+    margin: 0;
+  }
+  .plate {
+    aspect-ratio: 16 / 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+  }
+  .plate.tall {
+    aspect-ratio: 16 / 7;
+  }
+  .plate img {
+    width: min(80%, 520px);
+  }
+  .logo-grid figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    margin-top: var(--space-3);
+    font-size: var(--text-small);
+    color: var(--muted);
+  }
+  .logo-grid figcaption .link {
+    color: var(--fg);
+  }
+  .symbol {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .downloads {
+    margin-top: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+  }
+  .symbol-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .sq {
+    width: 180px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .sq img {
+    width: 70%;
+  }
+  .avatar {
+    width: 120px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .rules {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .rules-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--space-7);
+  }
+  .rules-grid .facts {
+    margin-top: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .swatches {
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  .chip {
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-3);
+    font-size: var(--text-small);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .c-name {
+    margin-top: var(--space-3);
+    font-weight: 700;
+  }
+  .c-val {
+    font-size: var(--text-small);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .c-use {
+    margin-top: var(--space-2);
+    font-size: var(--text-small);
+    color: var(--muted);
+  }
+  .ratio {
+    margin-top: var(--space-8);
+    display: flex;
+    height: 40px;
+  }
+  .note {
+    margin-top: var(--space-3);
+    font-size: var(--text-small);
+    color: var(--muted);
+  }
+  .type {
+    background: var(--brand-carbon);
+    color: var(--brand-snow);
+  }
+  .type .intro {
+    color: #a3abb5;
+  }
+  .faces {
+    margin-top: var(--space-8);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: var(--space-8);
+  }
+  .faces article {
+    border-top: 1px solid #3a4049;
+    padding-top: var(--space-6);
+  }
+  .faces h3 {
+    margin-top: var(--space-6);
+    font-size: var(--text-title);
+  }
+  .faces p:not(.specimen) {
+    margin-top: var(--space-2);
+    max-width: 46ch;
+    color: #a3abb5;
+  }
+  .faces .link {
+    display: inline-block;
+    margin-top: var(--space-4);
+  }
+  .specimen {
+    line-height: 1.1;
+  }
+  .michroma {
+    font-family: Michroma, var(--font-body);
+    font-size: clamp(2rem, 1.2rem + 2.4vw, 3.25rem);
+    letter-spacing: 0.2em;
+  }
+  .manrope {
+    font-size: clamp(2rem, 1.2rem + 2.4vw, 3.25rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .subtitles {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .facts.single {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .facts.single div {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--space-4);
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--line);
+  }
+  .facts.single dd {
+    margin: 0;
+  }
+  .phones {
+    display: flex;
+    gap: var(--space-4);
+  }
+  .frame {
+    position: relative;
+    margin: 0;
+    width: 260px;
+  }
+  .sub-sample {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 62%;
+    text-align: center;
+    font-weight: 800;
+    font-size: 17px;
+    line-height: 1.3;
+    color: #fdfdfd;
+    text-shadow: 0 2px 8px rgba(18, 20, 23, 0.6);
+  }
+  .sub-sample span {
+    background: var(--brand-green);
+    padding: 0 6px;
+  }
+  .donts {
+    background: #eef0f2;
+  }
+  .donts-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: var(--space-7);
+  }
+  .donts ol {
+    margin: 0;
+    padding-left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    font-size: var(--text-lede);
+  }
+  .donts li::marker {
+    font-weight: 700;
+    color: var(--brand-green);
+  }
+  .uses-grid {
+    margin-top: var(--space-7);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: start;
+  }
+  .uses-grid figure {
+    margin: 0;
+  }
+  .uses-grid figcaption {
+    margin-top: var(--space-3);
+    max-width: 52ch;
+    font-size: var(--text-small);
+    color: var(--muted);
+  }
+  .watermark {
+    position: relative;
+  }
+  .watermark .wm {
+    position: absolute;
+    right: 4%;
+    bottom: 3%;
+    width: 25%;
+    opacity: 0.85;
+  }
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .card {
+    aspect-ratio: 85 / 55;
+  }
+  .front {
+    background: var(--brand-carbon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .front img {
+    width: 62%;
+  }
+  .back {
+    background: var(--brand-paper);
+    box-shadow: inset 0 0 0 1px var(--line);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card-symbol {
+    width: 40px;
+  }
+  .card-name {
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+  .card-role,
+  .card-contact {
+    font-size: var(--text-small);
+    color: var(--muted);
+  }
+  .card-contact {
+    margin-top: var(--space-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 1100px) {
+    .swatches {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 860px) {
+    .cover-text,
+    .facts,
+    .rules-grid,
+    .rules-grid .facts,
+    .faces,
+    .donts-grid,
+    .uses-grid,
+    .symbol,
+    .subtitles,
+    .logo-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .swatches {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .phones {
+      justify-content: center;
+    }
+    .frame {
+      width: min(45vw, 260px);
+    }
+    .sub-sample {
+      font-size: 13px;
+    }
+    .facts.single div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2);
+    }
+  }
+</style>
+

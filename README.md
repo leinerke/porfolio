@@ -18,5 +18,6 @@ npm run build    # genera dist/ para publicar
 
 ## Marca
 - Logos en `public/brand/` (logotipo, submarcas .studio/.raw, símbolo, una tinta, avatares). Se regeneran con `scripts/brand.py` (necesita Michroma.ttf; ver instrucciones en el archivo).
-- Fuentes: Michroma (marca y titulares cortos), Manrope (web y subtítulos de video, ExtraBold), JetBrains Mono (metadatos). Todas SIL OFL, uso comercial libre.
+- Fuentes: Michroma (solo el logotipo) y Manrope (web, titulares, textos; ExtraBold para subtítulos de video). SIL OFL, uso comercial libre.
+- Manual de marca publicado en la web: `/marca`.
 - Colores: verde tierra #1E523A, verde luz #3A8A62, carbón #121417, grafito #2A2F36, plata #C9CDD2, papel #F8F9FA, dorado #B89A5E (solo especiales).

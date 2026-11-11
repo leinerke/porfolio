@@ -1,13 +1,15 @@
 ---
 import { brands, wa } from '../data/content';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <footer class="footer">
-  <div class="wrap row meta">
-    <span>© {new Date().getFullYear()} Leinerke · Medellín</span>
-    <span class="social">
+  <div class="wrap row">
+    <span>© {new Date().getFullYear()} Leinerke, Medellín</span>
+    <span class="links">
       <a href={brands.studio.instagram} target="_blank" rel="noopener">@leinerke.studio</a>
       <a href={brands.raw.instagram} target="_blank" rel="noopener">@leinerke.raw</a>
+      <a href={`${base}/marca/`}>Manual de marca</a>
     </span>
   </div>
 </footer>
@@ -21,45 +23,48 @@ import { brands, wa } from '../data/content';
 
 <style>
   .footer {
-    border-top: 1px solid var(--line);
+    background: var(--band);
+    color: var(--band-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: var(--text-small);
+    transition: background-color 400ms var(--ease);
   }
   .row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 8px 16px;
-    padding-block: 24px 96px;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-5) var(--space-9);
   }
-  .social {
+  .links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 20px;
+    gap: 0 var(--space-5);
   }
-  .social a {
+  .links a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
     text-decoration: none;
   }
-  .social a:hover {
-    color: var(--fg);
+  .links a:hover {
+    color: var(--band-fg);
   }
   .fab {
     position: fixed;
-    right: 20px;
-    bottom: 20px;
+    right: var(--space-5);
+    bottom: var(--space-5);
     z-index: 30;
     width: 56px;
     height: 56px;
     border-radius: 50%;
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-ink);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-    transition: transform 200ms ease;
+    transition: transform 200ms var(--ease);
   }
   .fab:hover {
     transform: scale(1.06);

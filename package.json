@@ -10,8 +10,8 @@
     "media": "zsh scripts/media.sh"
   },
   "dependencies": {
-    "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/manrope": "^5.3.0",
+    "@fontsource/michroma": "^5.3.0",
     "astro": "^7.4.7"
   }
 }

@@ -5,10 +5,7 @@ const modes: Mode[] = ['studio', 'raw'];
 
 <section id="portafolio" class="wrap portfolio">
   <div class="head">
-    <div>
-      <p class="eyebrow">[ 01 / Portafolio ]</p>
-      <h2 class="title-xl">Trabajo seleccionado</h2>
-    </div>
+    <h2 class="section-title">Trabajo seleccionado</h2>
     {
       modes.map((m) => (
         <div class="filters" role="group" aria-label="Filtrar por categoría" data-only={m}>
@@ -72,7 +69,7 @@ const modes: Mode[] = ['studio', 'raw'];
               </button>
               <figcaption>
                 <span class="name">{p.title}</span>
-                <span class="meta">{p.tag}</span>
+                <span class="tag">{p.tag}</span>
               </figcaption>
             </figure>
           );
@@ -80,13 +77,13 @@ const modes: Mode[] = ['studio', 'raw'];
       </div>
     ))
   }
-  <p class="empty eyebrow" hidden>No hay trabajos en esta categoría todavía.</p>
+  <p class="empty" hidden>No hay trabajos en esta categoría todavía.</p>
 </section>
 
 <!-- Visor a pantalla completa para fotos y reels (con sonido) -->
 <dialog id="viewer" class="viewer" aria-label="Visor de portafolio">
   <div class="stage"></div>
-  <p class="caption meta"></p>
+  <p class="caption"></p>
   <button type="button" class="nav prev" aria-label="Anterior">
     <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M13 3L6 10L13 17" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
   </button>
@@ -113,28 +110,23 @@ const modes: Mode[] = ['studio', 'raw'];
 
 <style>
   .portfolio {
-    padding-block: var(--section) 48px;
+    padding-block: var(--space-10) var(--space-9);
   }
   .head {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 20px;
-    padding-bottom: 20px;
+    gap: var(--space-5);
+    padding-bottom: var(--space-5);
     border-bottom: 1px solid var(--line);
-  }
-  .head .eyebrow {
-    margin-bottom: 14px;
   }
   .filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 20px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    gap: 0 var(--space-5);
+    font-size: 0.9375rem;
+    font-weight: 500;
   }
   .filters button {
     min-height: 44px;
@@ -143,8 +135,6 @@ const modes: Mode[] = ['studio', 'raw'];
     border-bottom: 1px solid transparent;
     background: transparent;
     color: var(--muted);
-    letter-spacing: inherit;
-    text-transform: inherit;
     cursor: pointer;
     transition: color 200ms ease, border-color 200ms ease;
   }
@@ -154,13 +144,13 @@ const modes: Mode[] = ['studio', 'raw'];
   }
   /* Masonry: cada foto o reel completo en su formato original, sin recortes */
   .grid {
-    margin-top: 32px;
+    margin-top: var(--space-7);
     columns: 3 280px;
-    column-gap: 16px;
+    column-gap: var(--space-4);
   }
   .item {
     break-inside: avoid;
-    margin: 0 0 24px;
+    margin: 0 0 var(--space-6);
   }
   .item[hidden] {
     display: none;
@@ -178,11 +168,13 @@ const modes: Mode[] = ['studio', 'raw'];
   .open img,
   .open video {
     width: 100%;
-    transition: transform 600ms ease, opacity 300ms ease;
   }
-  .open:hover img,
-  .open:hover video {
-    transform: scale(1.02);
+  /* Una sola señal, en el contenedor: el título se subraya */
+  .item:hover .name,
+  .open:focus-visible + figcaption .name {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
   }
   .badge {
     position: absolute;
@@ -191,28 +183,32 @@ const modes: Mode[] = ['studio', 'raw'];
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 10px;
-    background: rgba(18, 20, 23, 0.72);
-    color: #fff;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    padding: var(--space-2) var(--space-3);
+    background: var(--brand-carbon);
+    color: var(--brand-snow);
+    font-size: var(--text-small);
+    font-weight: 700;
+    line-height: 1;
   }
   figcaption {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: baseline;
-    gap: 4px 16px;
-    padding-top: 12px;
+    gap: var(--space-2) var(--space-4);
+    padding-top: var(--space-3);
   }
   .name {
-    font-size: 17px;
+    font-weight: 700;
+  }
+  .tag {
+    font-size: var(--text-small);
+    color: var(--muted);
   }
   .empty {
-    padding: 64px 0;
+    padding: var(--space-9) 0;
     text-align: center;
+    color: var(--muted);
   }
 
   .viewer {
@@ -248,9 +244,10 @@ const modes: Mode[] = ['studio', 'raw'];
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 24px;
+    bottom: var(--space-5);
     text-align: center;
-    color: #9aa3ae;
+    font-size: var(--text-small);
+    color: #a3abb5;
   }
   .nav,
   .x {
@@ -375,7 +372,7 @@ const modes: Mode[] = ['studio', 'raw'];
       im.alt = item.alt;
       stage.append(im);
     }
-    caption.textContent = `${item.title} · ${item.tag}  —  ${pos + 1} / ${list.length}`;
+    caption.textContent = `${item.title}, ${item.tag.toLowerCase()}. ${pos + 1} de ${list.length}`;
   };
   const step = (d: number) => {
     pos = (pos + d + list.length) % list.length;

@@ -8,8 +8,7 @@ import { brands, img, asset } from '../data/content';
       <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
     </button>
   </form>
-  <p class="eyebrow">[ Bienvenido ]</p>
-  <h2 id="picker-title" tabindex="-1" autofocus>¿Qué estás buscando<span class="dot">?</span></h2>
+  <h2 id="picker-title" tabindex="-1" autofocus>¿Qué estás buscando?</h2>
   <form method="dialog" class="options">
     <button class="option studio" data-set-mode="studio">
       <img src={img(brands.studio.pickerImg, 800)} alt="" width="800" height="1000" />
@@ -58,10 +57,6 @@ import { brands, img, asset } from '../data/content';
     align-items: center;
     justify-content: center;
   }
-  .picker .eyebrow {
-    color: #5b636e;
-    margin-bottom: 12px;
-  }
   h2:focus {
     outline: none;
   }
@@ -70,9 +65,6 @@ import { brands, img, asset } from '../data/content';
     line-height: 1.05;
     letter-spacing: -0.03em;
     margin-bottom: 28px;
-  }
-  .picker .dot {
-    color: #1e523a;
   }
   .options {
     display: grid;
@@ -112,13 +104,12 @@ import { brands, img, asset } from '../data/content';
   }
   .sub {
     margin-top: -2px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    color: #1e523a;
+    font-size: var(--text-small);
+    font-weight: 700;
+    color: var(--brand-green);
   }
   .raw .sub {
-    color: #3a8a62;
+    color: var(--brand-green-light);
   }
   .wm {
     align-self: flex-start;
@@ -133,13 +124,12 @@ import { brands, img, asset } from '../data/content';
     }
     .sub {
     margin-top: -2px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    color: #1e523a;
+    font-size: var(--text-small);
+    font-weight: 700;
+    color: var(--brand-green);
   }
   .raw .sub {
-    color: #3a8a62;
+    color: var(--brand-green-light);
   }
   .wm {
       height: 9px;

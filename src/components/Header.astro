@@ -1,15 +1,16 @@
 ---
 import { brands, wa, asset } from '../data/content';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const links = [
-  ['Portafolio', '#portafolio'],
-  ['Servicios', '#servicios'],
-  ['Sobre mí', '#sobre-mi'],
+  ['Portafolio', `${base}/#portafolio`],
+  ['Servicios', `${base}/#servicios`],
+  ['Sobre mí', `${base}/#sobre-mi`],
 ];
 ---
 
 <header class="header">
   <div class="wrap bar">
-    <a href="#inicio" class="logo" aria-label="Leinerke, inicio">
+    <a href={`${base}/`} class="logo" aria-label="LEINERKE, inicio">
       <img src={asset('brand/logo-leinerke-sin-margen.svg')} alt="LEINERKE" data-only="studio" width="154" height="14" />
       <img src={asset('brand/logo-leinerke-blanco-sin-margen.svg')} alt="LEINERKE" data-only="raw" width="154" height="14" />
     </a>
@@ -42,14 +43,14 @@ const links = [
     z-index: 40;
     background: var(--bg);
     border-bottom: 1px solid var(--line);
-    transition: background-color 400ms ease;
+    transition: background-color 400ms var(--ease);
   }
   .bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding-block: 10px;
+    gap: var(--space-4);
+    min-height: 68px;
   }
   .logo {
     display: flex;
@@ -66,75 +67,76 @@ const links = [
     border: 1px solid var(--line);
     border-radius: 999px;
     padding: 3px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
+    font-size: var(--text-small);
+    font-weight: 700;
   }
   .toggle button {
-    min-height: 36px;
-    padding: 0 14px;
+    min-height: 40px;
+    padding: 0 var(--space-4);
     border: 0;
     border-radius: 999px;
     background: transparent;
     color: var(--muted);
     cursor: pointer;
-    transition: background-color 300ms ease, color 300ms ease;
+    transition: background-color 300ms var(--ease), color 300ms var(--ease);
+  }
+  .toggle button:hover {
+    color: var(--fg);
   }
   .toggle button[aria-pressed='true'] {
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-ink);
   }
   .links {
     display: flex;
     align-items: center;
-    gap: 28px;
-    font-size: 15px;
+    gap: var(--space-6);
+    font-size: 0.9375rem;
   }
   .links a:not(.btn) {
     color: var(--muted);
     text-decoration: none;
-    transition: color 200ms ease;
+    transition: color 200ms var(--ease);
   }
   .links a:not(.btn):hover {
     color: var(--fg);
   }
   .cta {
     min-height: 44px;
-    padding: 0 20px;
+    padding: 0 var(--space-5);
+    font-size: 0.9375rem;
   }
   .menu-btn {
     display: none;
     align-items: center;
     min-height: 44px;
-    padding: 0 4px;
+    padding: 0 var(--space-2);
     border: 0;
     background: transparent;
     cursor: pointer;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-weight: 700;
   }
   .mobile {
     display: flex;
     flex-direction: column;
-    padding-block: 8px 24px;
+    padding-block: var(--space-2) var(--space-6);
     border-top: 1px solid var(--line);
   }
   .mobile[hidden] {
     display: none;
   }
   .mobile a:not(.btn) {
-    padding: 12px 0;
-    font-size: 26px;
+    padding: var(--space-3) 0;
+    font-size: 1.75rem;
+    font-weight: 700;
     letter-spacing: -0.02em;
     text-decoration: none;
   }
   .mobile .btn {
-    margin-top: 12px;
+    margin-top: var(--space-4);
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 800px) {
     .links {
       display: none;
     }
@@ -147,12 +149,13 @@ const links = [
       height: 11px;
     }
     .toggle button {
-      padding: 0 10px;
+      padding: 0 var(--space-3);
     }
   }
 </style>
 
 <script>
+  import '../scripts/mode';
   const btn = document.querySelector<HTMLButtonElement>('.menu-btn')!;
   const menu = document.getElementById('menu-movil')!;
   const setOpen = (open: boolean) => {
