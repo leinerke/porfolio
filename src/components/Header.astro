@@ -150,7 +150,7 @@ const links = [
     top: 69px;
     left: 0;
     right: 0;
-    height: calc(100dvh - 69px);
+    bottom: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -227,8 +227,14 @@ const links = [
     btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
   };
   btn.addEventListener('click', () => setOpen(menu.hidden));
-  // Con el menú abierto, la página de fondo no se desplaza
-  new MutationObserver(() => document.body.style.setProperty('overflow', menu.hidden ? '' : 'hidden')).observe(menu, { attributes: true, attributeFilter: ['hidden'] });
+  // Con el menú abierto, la página de fondo no se desplaza. Se bloquea en <html>
+  // (no en <body>): así el header sigue fijo arriba y no se mueve con la página.
+  const header = document.querySelector<HTMLElement>('.header')!;
+  new MutationObserver(() => {
+    const open = !menu.hidden;
+    if (open) menu.style.top = `${Math.round(header.getBoundingClientRect().bottom)}px`;
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }).observe(menu, { attributes: true, attributeFilter: ['hidden'] });
   menu.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).closest('a')) setOpen(false);
   });
