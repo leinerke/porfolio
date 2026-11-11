@@ -38,7 +38,7 @@ const modes: Mode[] = ['studio', 'raw'];
                     <video
                       class="preview"
                       src={v.preview}
-                      poster={v.poster}
+                      data-poster={v.poster}
                       width={p.w}
                       height={p.h}
                       muted
@@ -354,7 +354,14 @@ const modes: Mode[] = ['studio', 'raw'];
   };
   const io = new IntersectionObserver(
     (entries) => {
-      entries.forEach((en) => (en.isIntersecting ? visible.add(en.target as HTMLVideoElement) : visible.delete(en.target as HTMLVideoElement)));
+      entries.forEach((en) => {
+        const v = en.target as HTMLVideoElement;
+        if (en.isIntersecting) {
+          // La portada del reel también se descarga solo cuando está por verse
+          if (!v.poster && v.dataset.poster) v.poster = v.dataset.poster;
+          visible.add(v);
+        } else visible.delete(v);
+      });
       syncPreviews();
     },
     { rootMargin: '200px 0px' },

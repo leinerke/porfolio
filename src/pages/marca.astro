@@ -68,7 +68,7 @@ const donts = [
           {logos.map((l) => (
             <figure>
               <div class="plate" style={`background: ${l.bg}`}>
-                <img src={brand(l.file)} alt={`Logotipo, versión ${l.name.toLowerCase()}`} />
+                <img loading="lazy" decoding="async" src={brand(l.file)} alt={`Logotipo, versión ${l.name.toLowerCase()}`} />
               </div>
               <figcaption>
                 <span>{l.name}</span>
@@ -81,7 +81,7 @@ const donts = [
           {subs.map((l) => (
             <figure>
               <div class="plate tall" style={`background: ${l.bg}`}>
-                <img src={brand(l.file)} alt={`Logotipo de ${l.name}`} />
+                <img loading="lazy" decoding="async" src={brand(l.file)} alt={`Logotipo de ${l.name}`} />
               </div>
               <figcaption>
                 <span><b>{l.name}</b>. {l.note}</span>
@@ -105,10 +105,10 @@ const donts = [
         </p>
       </div>
       <div class="symbol-row">
-        <div class="sq" style="background: var(--brand-paper)"><img src={brand('simbolo.svg')} alt="Símbolo sobre claro" /></div>
-        <div class="sq" style="background: var(--brand-carbon)"><img src={brand('simbolo-blanco.svg')} alt="Símbolo sobre oscuro" /></div>
-        <img class="avatar" src={brand('avatar-studio.png')} alt="Foto de perfil de @leinerke.studio" width="1080" height="1080" />
-        <img class="avatar" src={brand('avatar-raw.png')} alt="Foto de perfil de @leinerke.raw" width="1080" height="1080" />
+        <div class="sq" style="background: var(--brand-paper)"><img loading="lazy" decoding="async" src={brand('simbolo.svg')} alt="Símbolo sobre claro" /></div>
+        <div class="sq" style="background: var(--brand-carbon)"><img loading="lazy" decoding="async" src={brand('simbolo-blanco.svg')} alt="Símbolo sobre oscuro" /></div>
+        <img loading="lazy" decoding="async" class="avatar" src={brand('avatar-studio.png')} alt="Foto de perfil de @leinerke.studio" width="1080" height="1080" />
+        <img loading="lazy" decoding="async" class="avatar" src={brand('avatar-raw.png')} alt="Foto de perfil de @leinerke.raw" width="1080" height="1080" />
       </div>
     </section>
 
@@ -206,14 +206,14 @@ const donts = [
         <figure>
           <div class="watermark">
             <img src={img('st-pizza')} alt="Foto de pizza con la marca de agua de LEINERKE" width="1080" height="1350" loading="lazy" />
-            <img class="wm" src={brand('logo-leinerke-blanco-una-tinta.svg')} alt="" />
+            <img loading="lazy" decoding="async" class="wm" src={brand('logo-leinerke-blanco-una-tinta.svg')} alt="" />
           </div>
           <figcaption>Marca de agua: logotipo blanco a una tinta, abajo a la derecha, a un cuarto del ancho de la foto y con 85 % de opacidad.</figcaption>
         </figure>
         <figure class="cards">
-          <div class="card front"><img src={brand('logo-leinerke-blanco-sin-margen.svg')} alt="Tarjeta de presentación, frente" /></div>
+          <div class="card front"><img loading="lazy" decoding="async" src={brand('logo-leinerke-blanco-sin-margen.svg')} alt="Tarjeta de presentación, frente" /></div>
           <div class="card back">
-            <img src={brand('simbolo.svg')} alt="" class="card-symbol" />
+            <img loading="lazy" decoding="async" src={brand('simbolo.svg')} alt="" class="card-symbol" />
             <div>
               <p class="card-name">Leinerke</p>
               <p class="card-role">Fotógrafo y filmmaker</p>

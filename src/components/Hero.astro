@@ -27,7 +27,8 @@ const modes: Mode[] = ['studio', 'raw'];
               width={b.hero.w}
               height={b.hero.h}
               alt={b.hero.alt}
-              fetchpriority={m === 'studio' ? 'high' : 'auto'}
+              loading="lazy"
+              decoding="async"
             />
             <figcaption>{b.hero.meta}</figcaption>
           </figure>
@@ -36,6 +37,18 @@ const modes: Mode[] = ['studio', 'raw'];
     })
   }
 </div>
+<script is:inline>
+  // La foto de la submarca activa es lo primero que se ve: cargarla ya, con prioridad.
+  // La de la otra submarca queda diferida y solo se descarga si cambias de submarca.
+  (function () {
+    var m = document.documentElement.dataset.mode;
+    var im = document.querySelector('#inicio [data-only="' + m + '"] img');
+    if (im) {
+      im.setAttribute('fetchpriority', 'high');
+      im.loading = 'eager';
+    }
+  })();
+</script>
 
 <style>
   /* Ledge: texto a la izquierda, la foto completa (sin recortar) a la derecha, todo dentro de una pantalla */

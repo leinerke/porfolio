@@ -10,9 +10,9 @@ export function currentMode(): Mode {
 
 export function setMode(mode: Mode) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
-  if (doc.startViewTransition && !reduce && currentMode() !== mode) {
-    doc.startViewTransition(() => applyMode(mode));
+  if (!reduce && currentMode() !== mode && document.querySelector('.loader')) {
+    // La pantalla de carga cubre, la submarca cambia por debajo y la pantalla se retira
+    document.dispatchEvent(new CustomEvent('loader:switch', { detail: () => applyMode(mode) }));
   } else applyMode(mode);
 }
 

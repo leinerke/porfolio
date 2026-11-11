@@ -55,7 +55,8 @@ import { asset } from '../data/content';
     opacity: 0;
     visibility: hidden;
   }
-  :global(.js[data-leaving]) .loader {
+  :global(.js[data-leaving]) .loader,
+  :global(.js[data-switching]) .loader {
     opacity: 1;
     visibility: visible;
     transition: opacity 300ms var(--ease);
@@ -122,6 +123,25 @@ import { asset } from '../data/content';
     root.dataset.leaving = '1';
     setTimeout(() => (location.href = url.href), 300);
   });
+  // Al cambiar de submarca: cubrir, aplicar el cambio y descubrir
+  const SHOW = 300;
+  const HOLD = 550;
+  document.addEventListener('loader:switch', (e) => {
+    const apply = (e as CustomEvent<() => void>).detail;
+    loader.hidden = false;
+    void loader.offsetWidth;
+    root.dataset.switching = '1';
+    setTimeout(() => {
+      apply();
+      setTimeout(() => {
+        delete root.dataset.switching;
+        setTimeout(() => {
+          if (!root.dataset.switching && !root.dataset.leaving) loader.hidden = true;
+        }, 500);
+      }, HOLD);
+    }, SHOW);
+  });
+
   // Al volver con el botón atrás, la página viene de la caché: quitar la pantalla
   window.addEventListener('pageshow', (e) => {
     if (e.persisted) {

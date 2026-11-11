@@ -11,14 +11,14 @@ import { brands, img, asset } from '../data/content';
   <h2 id="picker-title" tabindex="-1" autofocus>¿Qué estás buscando?</h2>
   <form method="dialog" class="options">
     <button class="option studio" data-set-mode="studio">
-      <img src={img(brands.studio.pickerImg, 800)} alt="" width="800" height="1000" />
+      <img src={img(brands.studio.pickerImg, 800)} alt="" width="800" height="1000" loading="lazy" decoding="async" />
       <span class="label">
         <img src={asset('brand/logo-leinerke-studio-sin-margen.svg')} alt="LEINERKE STUDIO" class="wm" />
         <span>{brands.studio.pickerText}</span>
       </span>
     </button>
     <button class="option raw" data-set-mode="raw">
-      <img src={img(brands.raw.pickerImg, 800)} alt="" width="800" height="1000" />
+      <img src={img(brands.raw.pickerImg, 800)} alt="" width="800" height="1000" loading="lazy" decoding="async" />
       <span class="label">
         <img src={asset('brand/logo-leinerke-raw-blanco-sin-margen.svg')} alt="LEINERKE RAW" class="wm" />
         <span>{brands.raw.pickerText}</span>
